@@ -1,0 +1,9 @@
+[Harvester]
+harvester_name = Twitter Harvester
+harvester_exe = twitterHarvester.py
+
+[Parameters]
+latitude = latitude
+keyword = keyword
+area = area
+parameter1 = tweets

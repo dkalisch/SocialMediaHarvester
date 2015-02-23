@@ -1,0 +1,52 @@
+{% extends "base_template.html" %}
+
+{% block extra_styles %}
+	
+{% endblock %}
+
+{% block title %}SMH{% endblock %}
+
+{% block brand %}<a class="brand" href="{% url home %}">SMH</a>{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+
+{% block content %}
+	<div class="container-narrow">
+		<!-- headline -->
+		<div class="jumbotron">
+			<h1>Welcome to the Social Media Harvester</h1>
+			<p class="lead">Choose one of the following Harvesters.</p>
+		</div>
+   		
+   		<form action="" method="post">{% csrf_token %}
+   			<!-- parameter fields -->
+   			{% for parameter in listOfParameters %}
+				<div>
+			  		<label>{{ parameter }}</label> 
+			  		
+			  		<input name="param_{{ parameter }}" type="text" name="nameOfHarvester" maxlength="40" />
+				</div>
+   			{% endfor %}
+			
+			<br />
+		
+			<!-- Multiple selection of Harvesters -->
+			<div class="control-group">
+			    <label class="control-label" for="sectors">Select the sources you want to harvest (multiple selection via ctrl+left-click)</label>
+			    
+			    <div class="controls">
+					<select multiple="multiple" name="harvesters">
+						{% for harvester in listOfHarvesters %}
+							<option value="{{ harvester }}">{{ harvester }}</option>
+						{% endfor %}
+					</select>
+		    	</div>
+		    </div>
+						
+			<!-- button -->
+			<input class="btn btn-primary" type="submit" value="Start Harvesting!" />
+		</form>
+	</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base_template.html" %}
+
+{% block title %}Upload Harvester{% endblock %}
+
+{% block navbar %}
+	<li><a href="{% url home %}">Home</a></li>
+{% endblock %}
+
+			
+{% block content %}
+	<h1>Upload Harvester</h1>
+	
+	<hr />
+	<br />
+
+	<form enctype="multipart/form-data" action="" method="post">{% csrf_token %} 
+		{% if uploadForm.errors %}
+			<p class="text-error">Please correct the Errors below!</p>	
+		{% endif %}
+		
+		{% for field in uploadForm %}
+			<div>
+		  		{% if field.errors %}
+		    		{% for error in field.errors %}
+		      			<p style="color: red">{{ error }}</p>
+		    		{% endfor %}
+		  		{% endif %}
+		  		
+		  		{{ field.label_tag }} {{ field }}
+			</div>
+			
+			<br />
+		{% endfor %}
+
+		<input class="btn btn-primary" type="submit" onClick="submitFormOkay=true;" value="Save" />
+{% endblock %}

@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- js -->
+    <script src="/static/jquery-1.9.1.min.js"></script>
+ 	<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+ 	<script src="/static/bootstrap_select/bootstrap-select.min.js"></script>
+    
+    <!-- css -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/static/bootstrap_select/bootstrap-select.min.css" rel="stylesheet" media="screen">
+ 	
+    <style type="text/css">
+	  /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 48px;
+        line-height: 1;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        max-width: 700px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+  	  }
+  	  
+  	  /* Sticky Footer Stuff */
+  	  html,
+      body {
+        height: 100%;
+        /* The html and body elements cannot have any padding or margin. */
+      }
+
+      /* Wrapper for page content to push down footer */
+      #wrap {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        /* Negative indent footer by it's height */
+        margin: 0 auto -60px;
+      }
+  	  
+  	  
+      /* Set the fixed height of the footer here */
+      #push,
+      #footer {
+        height: 60px;
+      }
+      
+      #footer {
+        background-color: #f4f4f4;
+      }
+
+      .container .credit {
+        margin: 20px 0;
+      }
+      
+      .controls textarea{
+      	width:60%;
+      }
+      
+      .controls ul{
+      	list-style:none;
+      }
+      
+      .breadcrumb{
+		padding-left:0px;
+		background-color: transparent;
+	  }
+	  
+ 		{% block extra_styles %}
+ 		{% endblock %}
+ 	</style>
+</head>
+
+<body onload="initialize()">
+	<div id="wrap">
+		<div class="navbar-wrapper">
+			<div class="container">
+				
+        		<div class="navbar navbar-inverse">
+          			<div class="navbar-inner">
+							
+						{% block brand %}{% endblock %}
+	            			
+            			<div class="nav-collapse collapse">
+              				<ul class="nav">
+				                {% block navbar %} {% endblock %}
+				                
+				                {% if request.user.profile %}
+				                	<li><a href="{% url logout_view %}">Logout</a></li>
+				                	<li><a href="{% url password_view %}">Password</a></li>
+								{% else %}
+									<li><a href="{% url login_view %}">Login</a></li>
+								{% endif %}
+                 			</ul>
+	            		</div><!--/.nav-collapse -->
+          			</div><!-- navbar-inner -->
+        		</div><!-- navbar -->
+      		</div><!-- container -->
+		</div><!-- navbar-wrapper -->
+	
+			
+		<div class="container-narrow">
+			{% block navigation %}
+			{% endblock %}
+		</div>
+
+		<div class="container-narrow">
+			{% block content %}
+			{% endblock %}
+		</div>
+		
+	    <div id="push"></div>
+	</div>
+	
+	<div id="footer">
+      	<div class="container">
+			<p class="muted credit">
+				Copyright: Dominik Kalisch & Tobias Hauck
+			</p>
+   		</div>
+    </div>
+</body>
+
+</html>

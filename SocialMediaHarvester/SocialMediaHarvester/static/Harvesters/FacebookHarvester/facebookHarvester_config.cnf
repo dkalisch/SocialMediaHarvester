@@ -1,0 +1,14 @@
+[Harvester]
+harvester_name = Facebook Harvester
+harvester_exe = facebookHarvester.py
+
+[Parameters]
+keyword = kw
+longitude = long
+area = area
+parameter1 = person
+parameter2 = likes
+
+[RelevantModules]
+module1 = someModule
+module2 = someOtherModule
