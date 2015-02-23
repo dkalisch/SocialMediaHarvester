@@ -1,11 +1,12 @@
 # Django settings for SocialMediaHarvester project.
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+     ('Tobias Wetzel', 'tobias.wetzel@iao.fraunhofer.de'),
 )
 
 MANAGERS = ADMINS
@@ -13,11 +14,15 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
+        'NAME': 'smh',                      # Or path to database file if using sqlite3.
+        'USER': 'postgres',                      # Not used with sqlite3.
+        'PASSWORD': 'h7G2Ssf92thVl',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'PORT': '5432'                      # Set to empty string for default. Not used with sqlite3.
+    },
+    'mongoDB':{
+        'HOST': 'localhost',
+        'PORT': 27017
     }
 }
 
@@ -56,7 +61,7 @@ MEDIA_URL = 'http://127.0.0.1:8000/media/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_URL = 'http://127.0.0.1:8000'
+PROJECT_URL = 'http://127.0.0.1:8080'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -64,12 +69,16 @@ PROJECT_URL = 'http://127.0.0.1:8000'
 # Example: "/home/media/media.lawrence.com/static/"
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
+#log files
+LOG_DIR = os.path.join(PROJECT_DIR, 'logs')
+
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = PROJECT_URL + '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -85,13 +94,18 @@ STATICFILES_FINDERS = (
 
 
 #path to the Harvester-Folder
-PATH_TO_HARVESTERS = STATIC_ROOT+"\\Harvesters\\"
+#PATH_TO_HARVESTERS = STATIC_ROOT+"\\Harvesters\\"
+PATH_TO_HARVESTERS = os.path.join(PROJECT_DIR,'modules')
 
 #path to the file which contains the list of installed harvesters
-PATH_TO_INSTALLED_HARVESTERS_TXT = PATH_TO_HARVESTERS+"installedHarvesters.txt"
+#PATH_TO_INSTALLED_HARVESTERS_TXT = PATH_TO_HARVESTERS+"installedHarvesters.txt"
+PATH_TO_INSTALLED_HARVESTERS_INI = PATH_TO_HARVESTERS+"/installedModules.ini"
 
-#Parameters that should be named like this
-API_PARAMETERS = ["keyword", "latitude", "longitude", "area"]
+#Framework Parameters
+PATH_TO_GLOBAL_PARAMTERS_JSON = PATH_TO_HARVESTERS+'/global_parameters.json'
+
+#Framework META Parameters
+PATH_TO_META_PARAMTERS_JSON = PATH_TO_HARVESTERS+"/meta_parameters.json"
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '-1gs3#p1=%h(-(8d@jfx@#pdn-gv1acv6etw8d=7vtpo+tss2k'
@@ -102,6 +116,15 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
+
+TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+    'django.core.context_processors.request',
+)
+
+
+AUTH_PROFILE_MODULE = 'django.contrib.auth.models.User'
+
+
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -118,13 +141,15 @@ ROOT_URLCONF = 'SocialMediaHarvester.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'SocialMediaHarvester.wsgi.application'
 
-TEMPLATE_DIRS = ('C:/Users/hauck/workspace/SocialMediaHarvester/SocialMediaHarvester/templates'
+TEMPLATE_DIRS = ('/var/www/smh/html/SocialMediaHarvester/SocialMediaHarvester/templates'
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
 
+
 INSTALLED_APPS = (
+    'kombu.transport.django',            
     'django.contrib.auth',
     'django.contrib.admin',
     'django.contrib.contenttypes',
@@ -134,10 +159,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'SocialMediaHarvester.database',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+     'django.contrib.admindocs',
 )
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -150,20 +176,38 @@ LOGGING = {
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
-        }
+        },
+    },
+    'formatters': {
+        'standard': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
     },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
-        }
+       },
+        'logfile': {
+            'level':'DEBUG',
+            'class':'logging.handlers.RotatingFileHandler',
+            'filename': LOG_DIR + "/logfile.log",
+            'maxBytes': 50000,
+            'backupCount': 2,
+            'formatter': 'standard',
+        },
     },
     'loggers': {
         'django.request': {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
             'propagate': True,
+        },
+        'smh': {
+            'handlers': ['logfile'],
+            'level': 'DEBUG',
         },
     }
 }

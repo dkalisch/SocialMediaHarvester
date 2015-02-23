@@ -1,0 +1,15 @@
+{% extends "base_template.html" %}
+
+{% block content %}
+
+<h1>Configure Harvesters</h1>
+
+<h2>List of installed Harvesters</h2>
+
+<ul class='query_list'>
+	{% for harvester in modules %}
+		<li>{{ harvester.Name }}</li>
+	{% endfor %}
+</ul>
+
+{% endblock %}

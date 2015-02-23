@@ -1,6 +1,6 @@
 [TwitterHarvester]
-absolute_path_to_config_file = C:\Users\hauck\workspace\SocialMediaHarvester\SocialMediaHarvester\static\Harvesters\TwitterHarvester\twitterHarvester_config.cnf
-absolute_path_to_script_file = C:\Users\hauck\workspace\SocialMediaHarvester\SocialMediaHarvester\static\Harvesters\TwitterHarvester\twitterHarvester.py
+absolute_path_to_config_file = C:\Users\twetzel\workspace_py\SocialMediaHarvester\SocialMediaHarvester\static\Harvesters\TwitterHarvester\twitterHarvester_config.cnf
+absolute_path_to_script_file = C:\Users\twetzel\workspace_py\SocialMediaHarvester\SocialMediaHarvester\static\Harvesters\TwitterHarvester\twitterHarvester.py
 
 [TwitterHarvesterParameters]
 latitude = latitude
@@ -9,8 +9,8 @@ area = area
 parameter1 = tweets
 
 [FacebookHarvester]
-absolute_path_to_config_file = C:\Users\hauck\workspace\SocialMediaHarvester\SocialMediaHarvester\static\Harvesters\FacebookHarvester\facebookHarvester_config.cnf
-absolute_path_to_script_file = C:\Users\hauck\workspace\SocialMediaHarvester\SocialMediaHarvester\static\Harvesters\FacebookHarvester\facebookHarvester.py
+absolute_path_to_config_file = C:\Users\twetzel\workspace_py\SocialMediaHarvester\SocialMediaHarvester\static\Harvesters\FacebookHarvester\facebookHarvester_config.cnf
+absolute_path_to_script_file = C:\Users\twetzel\workspace_py\SocialMediaHarvester\SocialMediaHarvester\static\Harvesters\FacebookHarvester\facebookHarvester.py
 
 [FacebookHarvesterParameters]
 parameter2 = likes

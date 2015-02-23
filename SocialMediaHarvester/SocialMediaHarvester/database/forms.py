@@ -15,12 +15,20 @@ class PasswordForm(forms.Form):
     newPassword2.label = "Retype your new Password"
     
     
+#class UploadHarvesterForm(forms.Form):
+#    nameOfHarvester = forms.CharField(max_length=40)
+#    zippedFolder = forms.FileField(widget=forms.ClearableFileInput, required=True)
+#    nameOfConfigFile = forms.CharField(max_length=40)
+#    
+#    zippedFolder.label = "Upload a zipped Harvester Folder"
+#    nameOfConfigFile.label = "Exact name of the Config-File (with extension! e.g.: twitter.cnf)"
+#    nameOfHarvester.label = "Name of the Harvester (should be the same as in the Config-File)"
+ 
 class UploadHarvesterForm(forms.Form):
-    nameOfHarvester = forms.CharField(max_length=40)
-    zippedFolder = forms.FileField(widget=forms.ClearableFileInput, required=True)
-    nameOfConfigFile = forms.CharField(max_length=40)
+    json_file = forms.FileField(widget=forms.ClearableFileInput, required=True)
+    icon = forms.FileField(widget=forms.ClearableFileInput, required=True)
+    script = forms.FileField(widget=forms.ClearableFileInput, required=True)
     
-    zippedFolder.label = "Upload a zipped Harvester Folder"
-    nameOfConfigFile.label = "Exact name of the Config-File (with extension! e.g.: twitter.cnf)"
-    nameOfHarvester.label = "Name of the Harvester (should be the same as in the Config-File)"
-    
+    json_file.label = "JSON-file with config data" 
+    icon.label = "Icon that should be displayed"
+    script.label = "Harvester script"

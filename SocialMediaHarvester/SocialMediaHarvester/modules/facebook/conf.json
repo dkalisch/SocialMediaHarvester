@@ -1,0 +1,46 @@
+{
+    "name": "facebook",
+    "icon": "facebook.png",
+    "harvester": "facebookHarvester.py",
+    "dependencies": "",
+    "parameter_mapping": [
+        {
+            "name": "keyword",
+            "parameter": "term"
+        }
+    ],
+    "parameters": [
+        {
+            "name": "term",
+            "tooltip": "search query",
+			"example": "",
+            "isRequired": "true",
+            "check": "",
+            "parameters": {}
+        },
+        {
+            "name": "region",
+            "tooltip": "region",
+			"example": "",
+            "isRequired": "true",
+            "check": "",
+            "parameters": {}
+        },
+		{
+            "name": "gender",
+            "tooltip": "gender of the user posting",
+			"example": "",
+            "isRequired": "false",
+            "check": "",
+            "parameters": {}
+        },
+        {
+            "name": "age range",
+            "tooltip": "Ranges: 13-17, 18-24, 25-34, 35-44, 45-54, 55+",
+			"example": "",
+            "isRequired": "false",
+            "check": "",
+            "parameters": {}
+        }
+    ]
+}

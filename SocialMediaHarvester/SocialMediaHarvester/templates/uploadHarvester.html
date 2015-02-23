@@ -10,8 +10,7 @@
 {% block content %}
 	<h1>Upload Harvester</h1>
 	
-	<hr />
-	<br />
+	<br/>
 
 	<form enctype="multipart/form-data" action="" method="post">{% csrf_token %} 
 		{% if uploadForm.errors %}
@@ -33,4 +32,6 @@
 		{% endfor %}
 
 		<input class="btn btn-primary" type="submit" onClick="submitFormOkay=true;" value="Save" />
+		
+	<br/>
 {% endblock %}

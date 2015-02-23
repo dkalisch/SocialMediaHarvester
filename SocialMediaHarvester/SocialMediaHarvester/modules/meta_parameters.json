@@ -1,0 +1,28 @@
+{
+    "parameters": [
+    	{
+            "name": "description",
+            "tooltip": "Descriptions for the Query",
+			"example": "Chile Earthquake",
+            "isRequired": "true",
+            "check": "",
+            "parameters": {}
+        },    
+        {
+           "name": "starttime",
+                    "tooltip": "Starting point of the query. If not given the current time is taken.",
+					"example": "05/13/2014-16:30",
+                    "isRequired": "false",
+                    "check": "",
+                    "parameters": {}
+        },
+        {
+            "name": "stoptime",
+            "tooltip": "Point in time when the query stops.",
+			"example": "06/13/2014-16:30",
+            "isRequired": "true",
+            "check": "",
+            "parameters": {}
+        }
+    ]
+}

@@ -1,52 +1,71 @@
 {% extends "base_template.html" %}
 
 {% block extra_styles %}
-	
+
 {% endblock %}
 
 {% block title %}SMH{% endblock %}
 
-{% block brand %}<a class="brand" href="{% url home %}">SMH</a>{% endblock %}
-
-{% block navbar %}
-{% endblock %}
-
-
 {% block content %}
-	<div class="container-narrow">
-		<!-- headline -->
-		<div class="jumbotron">
-			<h1>Welcome to the Social Media Harvester</h1>
-			<p class="lead">Choose one of the following Harvesters.</p>
-		</div>
-   		
-   		<form action="" method="post">{% csrf_token %}
-   			<!-- parameter fields -->
-   			{% for parameter in listOfParameters %}
-				<div>
-			  		<label>{{ parameter }}</label> 
-			  		
-			  		<input name="param_{{ parameter }}" type="text" name="nameOfHarvester" maxlength="40" />
-				</div>
-   			{% endfor %}
-			
-			<br />
-		
-			<!-- Multiple selection of Harvesters -->
-			<div class="control-group">
-			    <label class="control-label" for="sectors">Select the sources you want to harvest (multiple selection via ctrl+left-click)</label>
-			    
-			    <div class="controls">
-					<select multiple="multiple" name="harvesters">
-						{% for harvester in listOfHarvesters %}
-							<option value="{{ harvester }}">{{ harvester }}</option>
-						{% endfor %}
-					</select>
-		    	</div>
-		    </div>
-						
-			<!-- button -->
-			<input class="btn btn-primary" type="submit" value="Start Harvesting!" />
-		</form>
+	<!-- headline -->
+	<div class="jumbotron">
+		<h1>Welcome to the Social Media Harvester</h1>
+		<p class="lead">
+			Choose one of the following Harvesters.
+		</p>
 	</div>
+	<div class="harvester_select">
+		{% for harvester in modules %}
+		<img class="inactive harvester_icon" id="icon_{{ harvester.Name }}" width="60px" rel="tooltip" title="{{ harvester.Name }}" onClick="harvesterClicked('icon_{{ harvester.Name }}')" src="/static/icons/{{ harvester.Icon }}">
+		{% endfor %}
+	</div>
+	
+	<!--  on submitting the checkForm() method is called -->
+	<form action="" method="post" onsubmit="return checkForm()">
+		{% csrf_token %} <!-- parameter fields -->
+		
+		<div id="meta_parameters" class="param_container active">
+			{% for parameter in listOfParameters.meta %}
+			<div class="param">
+				{% if parameter.IsRequired == 'true' %}
+				<label class="parameter-name required">{{ parameter.Name }}*</label>
+				{% else %}
+				<label class="parameter-name">{{ parameter.Name }}</label>
+				{% endif %}
+				<input class="parameter-input" name="param_meta_{{ parameter.Name }}" rel="tooltip" type="text" title="{{ parameter.Tooltip }}" placeholder="{{ parameter.Example }}"/>
+			</div>
+			{% endfor %}
+		</div>
+		
+		
+		<div id="global_parameters" class="param_container active">
+			{% for parameter in listOfParameters.global %}
+			<div class="param">
+				<label class="parameter-name required">{{ parameter.Name }}*</label>
+				<input class="parameter-input" name="param_global_{{ parameter.Name }}" rel="tooltip" type="text" title="{{ parameter.Tooltip }}" placeholder="{{ parameter.Example }}"/>
+			</div>
+			{% endfor %}
+		</div>
+
+		{% for key, value in listOfParameters.items %}
+		{% if key == 'global' or key == 'meta' %}
+		{% else %}
+		<div id="{{ key }}_parameters" class="inactive param_container">
+			{% for parameter in value %}
+			<div class="param">
+				{% if parameter.IsRequired == 'true' %}
+				<label class="parameter-name required">{{ parameter.Name }}*</label>
+				{% else %}
+				<label class="parameter-name">{{ parameter.Name }}</label>
+				{% endif %}
+				<input style="background:url(/static/icons/{{ key }}_small.png) right no-repeat;" name="param_{{ key }}_{{ parameter.Name }}" class="parameter-input" rel="tooltip" type="text" title="{{ parameter.Tooltip }}" placeholder="{{ parameter.Example }}"/>
+			</div>
+			{% endfor %}
+		</div>
+		{% endif %}
+		{% endfor %}
+
+		<!-- button -->
+		<input class="btn btn-primary" id="startButton" type="submit" value="Start Harvesting!"/>
+	</form>
 {% endblock %}

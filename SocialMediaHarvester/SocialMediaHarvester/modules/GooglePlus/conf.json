@@ -1,0 +1,63 @@
+{
+    "name": "GooglePlus",
+    "icon": "google.png",
+    "harvester": "googleHarvester.py",
+    "dependencies": "",
+    "parameter_mapping": [
+        {
+            "name": "keyword",
+            "parameter": "q"
+        }
+    ],
+    "parameters": [
+        {
+            "name": "q",
+            "tooltip": "search query",
+			"example": "",
+            "isRequired": "true",
+            "check": "",
+            "parameters": {}
+        },
+        {
+            "name": "address",
+            "tooltip": "street address",
+			"example": "",
+            "isRequired": "false",
+            "check": "",
+            "parameters": {}
+        },
+		{
+            "name": "radius",
+            "tooltip": "Radius in km",
+			"example": "",
+            "isRequired": "true",
+            "check": "",
+            "parameters": {}
+        },
+        {
+            "name": "geocode",
+            "tooltip": "lattitude, longitude, radius",
+			"example": "",
+            "isRequired": "true",
+            "check": "",
+            "parameters": [
+               {
+                    "name": "latitude",
+                    "tooltip": "lattitude",
+					"example": "",
+                    "isRequired": "true",
+                    "check": "",
+                    "parameters": {}
+                },
+				{
+                    "name": "longitude",
+                    "tooltip": "longitude",
+					"example": "",
+                    "isRequired": "true",
+                    "check": "",
+                    "parameters": {}
+                }
+            ]
+        }
+    ]
+}

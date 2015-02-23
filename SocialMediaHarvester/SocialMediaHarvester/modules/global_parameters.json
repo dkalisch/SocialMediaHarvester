@@ -1,0 +1,21 @@
+{
+    "parameters": [
+    
+        {
+           "name": "location",
+                    "tooltip": "Two point bounding box: longitude, latitude of south-west point followed by longitude, latitude of north-east point.",
+					"example": "-74,40,-73,41",
+                    "isRequired": "true",
+                    "check": "",
+                    "parameters": {}
+        },
+        {
+            "name": "keyword",
+            "tooltip": "Keyword filter. Keywords can be connected with logical OR's and AND's.",
+			"example": "#ChileEarthquake OR Chile AND Earthquake",
+            "isRequired": "false",
+            "check": "",
+            "parameters": {}
+        }
+    ]
+}

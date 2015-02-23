@@ -1,0 +1,42 @@
+{
+    "name": "twitter",
+    "icon": "twitter.png",
+    "harvester": "twitter.py",
+    "dependencies": "",
+    "parameter_mapping": [
+        {
+            "name": "location",
+            "parameter": "locations"
+        },
+        {
+            "name": "keyword",
+            "parameter": "track"
+        }
+    ],
+    "parameters": [
+        {
+            "name": "track",
+            "tooltip": "search query",
+			"example": "",
+            "isRequired": "true",
+            "check": "",
+            "parameters": {}
+        },
+        {
+            "name": "language",
+            "tooltip": "IETF language tag.",
+			"example": "en",
+            "isRequired": "false",
+            "check": "",
+            "parameters": {}
+        },
+        {
+            "name": "locations",
+            "tooltip": "Bounding Box",
+			"example": "",
+            "isRequired": "true",
+            "check": "",
+            "parameters": []
+        }
+    ]
+}

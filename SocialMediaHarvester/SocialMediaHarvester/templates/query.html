@@ -1,0 +1,85 @@
+{% extends "base_template.html" %}
+
+{% block content %}
+
+<h1>Your Queries</h1>
+<ul class='query_list'>
+	{% for query in queries %}
+	<li>
+		<div class='query_item'>
+
+			<div class="row">
+				<div class="col-md-8">
+					<p class="headline_big">
+						{{ query.description }}
+					</p>
+					{% if query.isRunning %}
+					<p class="green" >
+						RUNNING
+					</p>
+					<form action="" method="post">
+						{% csrf_token %} 
+						<input type="hidden" name="query_pid" value="{{ query.pid }}">
+						<input type="submit" value="X"/>
+						</form>
+					{% else %}
+					<p class="red" >
+						STOPPED
+					</p>
+					{% endif %}
+				</div>
+				<div class="col-md-4">
+					<img style="float:right;" class="harvester_icon" width="60px" rel="tooltip" title="{{ query.harvester.Name }}" src="/static/icons/{{ query.harvester }}.png">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<p class="headline">Timeframe</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2">
+					Start
+				</div>
+				<div class="col-md-10">
+					{{ query.starttime }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2">
+					Stop
+				</div>
+				<div class="col-md-10">
+					{{ query.stoptime }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<p class="headline">Parameters</p>
+				</div>
+			</div>
+
+			{% for param in params %}
+
+			{% if param.query_id = query.id %}
+			{% if param.value != "" and param.name != "description" and param.name != "starttime" and param.name != "stoptime" %}
+
+			<div class="row">
+				<div class="col-md-2">
+					{{ param.name }}
+				</div>
+				<div class="col-md-10">
+					{{ param.value}}
+				</div>
+			</div>
+			{% endif %}
+			{% endif %}
+
+			{% endfor %}
+		</div>
+	</li>
+	{% endfor %}
+</ul>
+
+{% endblock %}

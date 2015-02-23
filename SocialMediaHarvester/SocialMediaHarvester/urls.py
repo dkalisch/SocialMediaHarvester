@@ -12,6 +12,12 @@ urlpatterns = patterns('',
     #------ HOME
     url(r'^$', 'SocialMediaHarvester.database.views.home_view', name='home'),
     
+    #------ Query View
+    url(r'^queries/$', 'SocialMediaHarvester.database.views.query_view', name='query_view'),
+    
+    #------ Configure Harvesters
+    url(r'configuration/$','SocialMediaHarvester.database.views.configuration_view', name='configuration_view'),
+    
     #------ UPLOAD HARVESTER
     url(r'^uploadHarvester/$', 'SocialMediaHarvester.database.views.uploadHarvester_view', name='uploadHarvester_view'),
     
